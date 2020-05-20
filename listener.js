@@ -42,24 +42,19 @@ function CreateKeyboardListener(squares) {
                 return
             }
             let player = state.lastCurrentPieceType.split('-')[1];
-            if (player == state.currentPlayer) {
-                const command = {
-                    type: 'move:piece',
-                    payload: {
-                        'piece_type': state.lastCurrentPieceType,
-                        'current_position': state.lastCurrentPosition,
-                        'last_piece': state.lastPiece,
-                        'current_piece': piece
-                    }
-                }
 
-                notifyAll(command);
-                if (state.currentPlayer == "white") {
-                    state.currentPlayer = "black"
-                } else {
-                    state.currentPlayer = "white"
+            const command = {
+                type: 'move:piece',
+                payload: {
+                    'piece_type': state.lastCurrentPieceType,
+                    'current_position': state.lastCurrentPosition,
+                    'last_piece': state.lastPiece,
+                    'current_piece': piece,
+                    'player': player,
                 }
             }
+            notifyAll(command);
+
 
         }, false);
     }

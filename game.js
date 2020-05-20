@@ -2,7 +2,7 @@ function NewGame(squares, pieces) {
     let state = {
         players: {},
         moves: {},
-        currentPlayer: {}
+        currentPlayer: 'white',
     }
 
     function Run() {
@@ -13,23 +13,36 @@ function NewGame(squares, pieces) {
         if (command.type != 'move:piece') {
             return
         }
-        //togleLegalMoves();
+
+        togleLegalMoves();
+        let player = command.payload.player;
+        if (player != state.currentPlayer) {
+            return
+        }
+        console.log('state.currentPlayer ->', state.currentPlayer)
         let square = command.payload.current_position;
         let pieceType = command.payload.piece_type;
         let piece = command.payload.current_piece;
         let possibleMoves = verifyMoves(pieceType, square);
         let proxID = piece.getAttribute('id');
         Object.keys(possibleMoves).forEach(function(i) {
-            //document.getElementById(possibleMoves[i]).classList.toggle('legal-move-hint')
             const index = possibleMoves[i]
             if (proxID == index) {
-                piece.appendChild(command.payload.last_piece)
+                piece.appendChild(command.payload.last_piece);
+                if (state.currentPlayer == "white") {
+                    state.currentPlayer = "black"
+                } else {
+                    state.currentPlayer = "white"
+                }
                 return
             }
         });
     }
 
     function ClickPiece(command) {
+        if (command.type != 'click:piece') {
+            return
+        }
         togleLegalMoves();
         let square = command.payload.current_position;
         let pieceType = command.payload.piece_type;
