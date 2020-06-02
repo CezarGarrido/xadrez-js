@@ -28,17 +28,23 @@ function CreateKeyboardListener(squares) {
             let currentPosition = board.getAttribute('id');
             let pieceType = piece.getAttribute('class').split(' ')[1];
             if (currentPosition != null) {
-                state.lastPiece = piece;
-                state.lastCurrentPosition = currentPosition;
-                state.lastCurrentPieceType = pieceType;
+                console.log(pieceType);
+                let player = pieceType.split('-')[1];
                 const command = {
                     type: 'click:piece',
                     payload: {
                         'piece_type': pieceType,
-                        'current_position': currentPosition
+                        'current_position': currentPosition,
+                        'player': player,
+                        'current_piece': piece,
+                        'last_piece': state.lastPiece,
+                        'last_current_position': state.lastCurrentPosition
                     }
                 }
                 notifyAll(command);
+                state.lastPiece = piece;
+                state.lastCurrentPosition = currentPosition;
+                state.lastCurrentPieceType = pieceType;
                 return
             }
             let player = state.lastCurrentPieceType.split('-')[1];
@@ -54,7 +60,9 @@ function CreateKeyboardListener(squares) {
                 }
             }
             notifyAll(command);
-
+            state.lastPiece = piece;
+            state.lastCurrentPosition = currentPosition;
+            state.lastCurrentPieceType = pieceType;
 
         }, false);
     }
