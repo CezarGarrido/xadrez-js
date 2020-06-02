@@ -218,7 +218,7 @@ function NewGame(squares, pieces) {
 
 
 let Piece = {
-    color: ''
+    color: '',
     type: '',
     X: '',
     Y: ''
