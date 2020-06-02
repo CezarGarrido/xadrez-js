@@ -25,7 +25,7 @@
     const elBoard = document.getElementsByClassName('board')[0];
     const elCurrentPieces = document.getElementsByClassName("current-piece");
 
-    const game = NewGame(elSquares, elCurrentPieces);
+    const game = new NewGame(elSquares, elCurrentPieces);
     let board = new Board(elBoard, elSquares, game);
 
     board.Render();
